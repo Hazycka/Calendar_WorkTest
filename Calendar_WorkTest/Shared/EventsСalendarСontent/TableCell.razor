@@ -1,0 +1,75 @@
+﻿<td class="dates-table__cell @(Date == DateTime.Today ? "dates-table__cell--choosen" : "")" @onclick="() => Modal = true">
+    <div class="@_dateAppearance">
+        @Date.Day.ToString()
+    </div>
+    <div class="cell-events-container">
+        @if (Events != null)
+        {
+            foreach (var item in Events)
+            {
+                <EventMinimalSize Event="item" OnUpdateEvent="OnUpdateEvent" OnDeleteEvent="OnDeleteEvent" ChooseMonth="ChooseMonth"/>
+            }
+        }
+    </div>
+</td>
+<Modal Open="Modal" Size="ModalSize.Small">
+    <ModalTitle><div class="modal-title__text">Добавить событие</div></ModalTitle>
+    <ModalBody>
+        <EventDetails Event="CreateDefaultEvent()" OnValidSubmit="OnCreateEvent" Modal="() => Modal = false" ChooseMonth="ChooseMonth"/>
+    </ModalBody>
+    <ModalFooter>
+        <Button Variant="Outline" OnClick="() => Modal = false">Отменить</Button>
+        <Button Variant="Primary" type="submit" form="eventDetailsForm">Добавить</Button>
+    </ModalFooter>
+</Modal>
+
+@code {
+    private string _dateAppearance;
+    bool _modal = false;
+
+    [Parameter] public DateTime Date { get; set; }
+    [Parameter] public List<Event>? Events { get; set; }
+    [Parameter] public EventCallback<Event> OnCreateEvent { get; set; }
+    [Parameter] public EventCallback<Event> OnUpdateEvent { get; set; }
+    [Parameter] public EventCallback<int> OnDeleteEvent { get; set; }
+    [Parameter] public EventCallback ChooseMonth { get; set; }
+
+    private bool Modal 
+    { 
+        get => _modal; 
+        set => _modal = value; 
+    }
+
+    protected override void OnParametersSet()
+    {
+        CalculateDateAppearance(Date);
+        SortEvents(Events);
+    }
+
+    private void CalculateDateAppearance(DateTime date)
+    {
+        if (date.Month == DateTime.Today.Month)
+        {
+            if (date == DateTime.Today)
+                _dateAppearance = "current-date";
+            else if (date.DayOfWeek == DayOfWeek.Sunday || date.DayOfWeek == DayOfWeek.Saturday)
+                _dateAppearance = "dates-table__cell--weekends";
+            else
+                _dateAppearance = "dates-table__cell--weekdays";
+        }
+        else
+        {
+            if (date.DayOfWeek == DayOfWeek.Sunday || date.DayOfWeek == DayOfWeek.Saturday)
+                _dateAppearance = "not-current-month--weekends";
+            else
+                _dateAppearance = "not-current-month";
+        }
+    }
+
+    private void SortEvents(List<Event> events)
+    {
+        events.Sort((x, y) => x.DateAndTime.CompareTo(y.DateAndTime));
+    }
+
+    private Event CreateDefaultEvent() => new() { Name = "", DateAndTime = Date, IsAllDay = false };
+}

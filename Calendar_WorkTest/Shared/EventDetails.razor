@@ -1,0 +1,26 @@
+﻿<Form Model="Event" OnValidSubmit="Submitting" id="eventDetailsForm" Layout="FormLayout.Vertical" style="max-width:auto">
+    <DataAnnotationsValidator />
+    <Text @bind-Value="Event.Name" Label="Название" />
+    <ValidationMessage For="() => Event.Name"></ValidationMessage>
+    <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+        <DateTimepicker Label="Дата-Время" Disabled="Event.IsAllDay" @bind-Value="Event.DateAndTime" Confirm="false"></DateTimepicker>
+        <ValidationMessage For="() => Event.DateAndTime"></ValidationMessage>
+    </div>
+    <CheckboxContainer Label="Чекбокс - Весь день">
+        <Checkbox @bind-Value="Event.IsAllDay"/>
+    </CheckboxContainer>
+</Form>
+
+@code {
+    [Parameter] public Event Event { get; set; }
+    [Parameter] public EventCallback<Event> OnValidSubmit { get; set; }
+    [Parameter] public EventCallback Modal { get; set; }
+    [Parameter] public EventCallback ChooseMonth { get; set; }
+
+    private void Submitting()
+    {
+        OnValidSubmit.InvokeAsync(Event);
+        Modal.InvokeAsync();
+        ChooseMonth.InvokeAsync();
+    }
+}

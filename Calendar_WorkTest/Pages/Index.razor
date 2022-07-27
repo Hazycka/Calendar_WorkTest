@@ -1,0 +1,25 @@
+﻿@page "/"
+@inject IRepository repository
+
+<PageTitle>Index</PageTitle>
+
+<h3>Calendar</h3>
+
+ <EventsCalendar Events="repository.GetEvents()" OnCreateEvent="CreateEvent" OnUpdateEvent="UpdateEvent" OnDeleteEvent="DeleteEvent" /> 
+
+@code{
+    private void CreateEvent(Event newEvent)
+    {
+        repository.CreateEvent(newEvent);
+    }
+
+    private void UpdateEvent(Event eventToUpdate)
+    {
+        repository.UpdateEvent(eventToUpdate);
+    }
+
+    private void DeleteEvent(int id)
+    {
+        repository.DeleteEvent(id);
+    }
+ }

@@ -1,0 +1,104 @@
+﻿
+<div class="events-calendar">
+    <table class="dates-table">
+        <colgroup span="7">
+            <col span="5" />
+            <col span="2" class="dates-table__cell--weekends--background" />
+        </colgroup>
+        <thead style="background-color: white;">
+            <tr>
+                <th>Пн</th>
+                <th>Вт</th>
+                <th>Ср</th>
+                <th>Чт</th>
+                <th>Пт</th>
+                <th>Сб</th>
+                <th>Вс</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < 6; i++)
+            {
+                <tr>
+                    @for (var j = 0; j < 7; j++)
+                    {
+                        List<Event> events = Events.FindAll(m => m.DateAndTime.Date == _startDate);
+                        <TableCell Date="_startDate" Events="events" OnCreateEvent="OnCreateEvent" OnUpdateEvent="OnUpdateEvent" 
+                            OnDeleteEvent="OnDeleteEvent" ChooseMonth="ChooseCurrentMonth"/>
+                        _startDate = _startDate.AddDays(1);
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="month-controls">
+        <div class="month-controls__button" @onclick="() => ChooseCurrentMonth()">
+            <div class="month-controls__button--text">
+                Сегодня
+            </div>
+        </div>
+        <div class="month-controls__button" @onclick="() => ChooseNextMonth(false)">
+            <div class="month-controls__button--text">
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+        </div>
+        <div class="month-controls__button" @onclick="() => ChooseNextMonth(true)">
+            <div class="month-controls__button--text">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </div>
+        <div class="month-controls__button">
+            <div class="month-controls__button--text">
+                @Constants.GetMonth(_currentMonth)
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private int _currentMonth;
+    private DateTime _startDate;
+
+    [Parameter] public List<Event>? Events { get; set; } = new();
+    [Parameter] public EventCallback<Event> OnCreateEvent { get; set; }
+    [Parameter] public EventCallback<Event> OnUpdateEvent { get; set; }
+    [Parameter] public EventCallback<int> OnDeleteEvent { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ChooseCurrentMonth();
+    }
+
+    private void CalculateNewStartDate(int month)
+    {
+        DateTime firstMonthDay = new(DateTime.Today.Year, month, 1);
+        DayOfWeek firstMonthDayOfWeek = firstMonthDay.DayOfWeek;
+
+        int dateModifier = 0;
+        if (firstMonthDayOfWeek == DayOfWeek.Sunday)
+            dateModifier = 6;
+        else
+            dateModifier = (int)firstMonthDayOfWeek - 1;
+
+        _startDate = firstMonthDay.AddDays(-dateModifier);
+    }
+
+    private void ChooseCurrentMonth()
+    {
+        _currentMonth = DateTime.Today.Month;
+        CalculateNewStartDate(_currentMonth);
+    }
+
+    private void ChooseNextMonth(bool isNextMonth)
+    {
+        DateTime currentMonthDate = new(DateTime.Today.Year, _currentMonth, 1);
+
+        if (isNextMonth)
+            _currentMonth = currentMonthDate.AddMonths(1).Month;
+        else
+            _currentMonth = currentMonthDate.AddMonths(-1).Month;
+
+        CalculateNewStartDate(_currentMonth);
+    }
+}

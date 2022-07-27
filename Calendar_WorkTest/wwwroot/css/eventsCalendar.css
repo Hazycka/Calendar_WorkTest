@@ -1,0 +1,166 @@
+﻿body {
+}
+
+.dates-table {
+    border-collapse: collapse;
+    font: 13px/1.5 Metropolis, Helvetica, sans-serif;
+    font-weight: 400;
+    cursor: default;
+    /*box-shadow: 0 3px 5px #e5e5e5;*/
+}
+
+.events-calendar {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 0 0 0;
+    border-bottom: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+    box-shadow: 0 5px 15px #e5e5e5;
+}
+
+.dates-table__cell {
+    border: 1px solid #dddddd;
+    width: 115px;
+    min-width: 115px;
+    max-width: 115px;
+    height: 115px;
+    max-height: 115px;
+    padding: 3px;
+    vertical-align: top;
+    line-height: 1;
+}
+
+    .dates-table__cell:hover {
+        background-color: #f3f3f7;
+        cursor: pointer;
+    }
+
+.dates-table th {
+    padding: 5px 10px;
+    font-weight: 600;
+    color: #181818;
+    font-size: 14px;
+}
+
+.dates-table__cell--choosen {
+    background-color: #f3f3f7;
+}
+
+.dates-table__cell--weekdays {
+    color: black;
+    padding: 7px;
+}
+
+.dates-table__cell--weekends {
+    color: #00c13f;
+    padding: 7px;
+}
+
+.dates-table__cell--weekends--background {
+    background-color: #f6fdf6;
+}
+
+.current-date {
+    background-color: #0064ff;
+    border-radius: 7px;
+    color: white;
+    padding: 7px;
+    display: inline-block;
+}
+
+.not-current-month {
+    color: #0000007a;
+    padding: 7px;
+}
+
+.not-current-month--weekends {
+    padding: 7px;
+    color: #00c13f7a;
+}
+
+.month-controls {
+    height: 60px;
+    font: 15px/1 Metropolis, Helvetica, sans-serif;
+    font-weight: 600;
+    color: #2f2f2f;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.month-controls__button {
+    padding: 7px;
+    display: inline-block;
+    flex: 0 0 auto;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+    .month-controls__button:active {
+        border-radius: 7px;
+        background-color: #f3f3f7;
+        transform: scale(0.98);
+    }
+
+.month-controls__button--text {
+
+}
+
+.cell-events-container {
+    display: flex;
+    flex-flow: column;
+    padding: 1px 0 0 0;
+}
+
+.cell-event {
+    display: inline-block;
+    padding: 3px;
+    margin: 1px 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: grab;
+}
+
+    .cell-event:hover {
+        background-color: #d6e0ff;
+        border-radius: 5px;
+    }
+.past-event {
+    opacity: 0.4;
+}
+.form-control {
+    width: auto;
+}
+.form-group {
+    margin-top: 10px;
+}
+
+.event-modal-checkbox {
+    width: 30px;
+    height: 30px;
+}
+
+.clr-col-md-2 {
+    max-width: none;
+}
+
+.popover {
+    border: none;
+}
+
+.icon {
+    vertical-align: unset;
+}
+
+.modal-title__text {
+    font-size: 1rem;
+}
+
+.modal-body {
+    padding: 0 1rem 1rem 1rem;
+}
