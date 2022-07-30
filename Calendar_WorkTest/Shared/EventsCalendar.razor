@@ -1,5 +1,4 @@
-﻿
-<div class="events-calendar">
+﻿<div class="events-calendar">
     <table class="dates-table">
         <colgroup span="7">
             <col span="5" />
@@ -23,8 +22,8 @@
                     @for (var j = 0; j < 7; j++)
                     {
                         List<Event> events = Events.FindAll(m => m.DateAndTime.Date == _startDate);
-                        <TableCell Date="_startDate" Events="events" OnCreateEvent="OnCreateEvent" OnUpdateEvent="OnUpdateEvent" 
-                            OnDeleteEvent="OnDeleteEvent" ChooseMonth="ChooseCurrentMonth"/>
+                        <TableCell Date="_startDate" Events="events" OnCreateEvent="CreateEvent" OnUpdateEvent="UpdateEvent" 
+                            OnDeleteEvent="DeleteEvent"/>
                         _startDate = _startDate.AddDays(1);
                     }
                 </tr>
@@ -32,7 +31,7 @@
         </tbody>
     </table>
     <div class="month-controls">
-        <div class="month-controls__button" @onclick="() => ChooseCurrentMonth()">
+        <div class="month-controls__button" @onclick="() => ChooseTodayMonth()">
             <div class="month-controls__button--text">
                 Сегодня
             </div>
@@ -55,7 +54,6 @@
     </div>
 </div>
 
-
 @code {
     private int _currentMonth;
     private DateTime _startDate;
@@ -67,7 +65,7 @@
 
     protected override void OnInitialized()
     {
-        ChooseCurrentMonth();
+        ChooseTodayMonth();
     }
 
     private void CalculateNewStartDate(int month)
@@ -84,9 +82,14 @@
         _startDate = firstMonthDay.AddDays(-dateModifier);
     }
 
-    private void ChooseCurrentMonth()
+    private void ChooseTodayMonth()
     {
         _currentMonth = DateTime.Today.Month;
+        CalculateNewStartDate(_currentMonth);
+    }
+
+    private void ChooseCurrentMonth()
+    {
         CalculateNewStartDate(_currentMonth);
     }
 
@@ -100,5 +103,23 @@
             _currentMonth = currentMonthDate.AddMonths(-1).Month;
 
         CalculateNewStartDate(_currentMonth);
+    }
+
+    private void CreateEvent(Event eventToCreate)
+    {
+        OnCreateEvent.InvokeAsync(eventToCreate);
+        ChooseCurrentMonth();
+    }
+
+    private void UpdateEvent(Event eventToUpdate)
+    {
+        OnUpdateEvent.InvokeAsync(eventToUpdate);
+        ChooseCurrentMonth();
+    }
+
+    private void DeleteEvent(int idEventToDelete)
+    {
+        OnDeleteEvent.InvokeAsync(idEventToDelete);
+        ChooseCurrentMonth();
     }
 }

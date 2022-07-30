@@ -43,6 +43,10 @@
             "Blazority": {
               "target": "Package",
               "version": "[0.12.3, )"
+            },
+            "blazor-dragdrop": {
+              "target": "Package",
+              "version": "[2.4.0, )"
             }
           },
           "imports": [
