@@ -2,20 +2,18 @@
     <div class="@_dateAppearance">
         @Date.Day.ToString()
     </div>
-    <div class="cell-events-container">
-        @if (Events != null)
-        {
-            foreach (var item in Events)
-            {
-                <EventMinimalSize Event="item" OnUpdateEvent="OnUpdateEvent" OnDeleteEvent="OnDeleteEvent" ChooseMonth="ChooseMonth"/>
-            }
-        }
+    <div class="cell-events-container" >
+        <Dropzone Items="Events" TItem="Event" OnItemDrop="e => UpdateDroppedEvent(e)">
+            <div class="cell-events">
+                <EventMinimalSize Event="@context" OnUpdateEvent="OnUpdateEvent" OnDeleteEvent="OnDeleteEvent" />
+            </div>
+        </Dropzone>
     </div>
 </td>
 <Modal Open="Modal" Size="ModalSize.Small">
     <ModalTitle><div class="modal-title__text">Добавить событие</div></ModalTitle>
     <ModalBody>
-        <EventDetails Event="CreateDefaultEvent()" OnValidSubmit="OnCreateEvent" Modal="() => Modal = false" ChooseMonth="ChooseMonth"/>
+        <EventDetails Event="CreateDefaultEvent()" OnValidSubmit="OnCreateEvent" Modal="() => Modal = false" />
     </ModalBody>
     <ModalFooter>
         <Button Variant="Outline" OnClick="() => Modal = false">Отменить</Button>
@@ -25,25 +23,31 @@
 
 @code {
     private string _dateAppearance;
-    bool _modal = false;
+    private bool _modal = false;
 
     [Parameter] public DateTime Date { get; set; }
-    [Parameter] public List<Event>? Events { get; set; }
+    [Parameter] public List<Event>? Events { get; set; } = new();
     [Parameter] public EventCallback<Event> OnCreateEvent { get; set; }
     [Parameter] public EventCallback<Event> OnUpdateEvent { get; set; }
     [Parameter] public EventCallback<int> OnDeleteEvent { get; set; }
-    [Parameter] public EventCallback ChooseMonth { get; set; }
 
-    private bool Modal 
-    { 
-        get => _modal; 
-        set => _modal = value; 
+    private bool Modal
+    {
+        get => _modal;
+        set => _modal = value;
     }
 
     protected override void OnParametersSet()
     {
         CalculateDateAppearance(Date);
         SortEvents(Events);
+    }
+
+    private void UpdateDroppedEvent(Event eventToUpdate)
+    {
+        eventToUpdate.DateAndTime = new(Date.Year, Date.Month, Date.Day, eventToUpdate.DateAndTime.Hour,
+                                        eventToUpdate.DateAndTime.Minute, eventToUpdate.DateAndTime.Second);
+        OnUpdateEvent.InvokeAsync(eventToUpdate);
     }
 
     private void CalculateDateAppearance(DateTime date)

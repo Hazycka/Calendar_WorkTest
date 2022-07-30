@@ -1,6 +1,7 @@
 using Calendar_WorkTest.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Plk.Blazor.DragDrop;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IRepository, MockRepository>();
+builder.Services.AddBlazorDragDrop();
 
 var app = builder.Build();
 

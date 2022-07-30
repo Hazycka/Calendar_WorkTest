@@ -15,12 +15,10 @@
     [Parameter] public Event Event { get; set; }
     [Parameter] public EventCallback<Event> OnValidSubmit { get; set; }
     [Parameter] public EventCallback Modal { get; set; }
-    [Parameter] public EventCallback ChooseMonth { get; set; }
 
     private void Submitting()
     {
         OnValidSubmit.InvokeAsync(Event);
         Modal.InvokeAsync();
-        ChooseMonth.InvokeAsync();
     }
 }

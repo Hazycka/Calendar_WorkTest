@@ -100,7 +100,7 @@
     .month-controls__button:active {
         border-radius: 7px;
         background-color: #f3f3f7;
-        transform: scale(0.98);
+        transform: scale(0.99);
     }
 
 .month-controls__button--text {
@@ -108,15 +108,18 @@
 }
 
 .cell-events-container {
+    padding: 1px 0 0 0;
+    height: 75%;
+}
+
+.cell-events {
     display: flex;
     flex-flow: column;
-    padding: 1px 0 0 0;
 }
 
 .cell-event {
     display: inline-block;
     padding: 3px;
-    margin: 1px 0;
     font-size: 12px;
     font-weight: 500;
     color: black;
@@ -163,4 +166,29 @@
 
 .modal-body {
     padding: 0 1rem 1rem 1rem;
+}
+
+.plk-dd-dropzone {
+    height: 100%;
+}
+
+.plk-dd-in-transit {
+    margin: -1px 0;
+    border: 1px solid #0064ff;
+    border-radius: 5px;
+}
+
+.plk-dd-in-transit {
+    margin: -1px 0;
+    border: 1px solid #0064ff;
+    border-radius: 5px;
+}
+
+.plk-dd-spacing {
+    margin: 1px;
+}
+
+.event-drag-over {
+    border: 1px solid #0064ff;
+    border-radius: 5px;
 }

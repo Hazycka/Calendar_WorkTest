@@ -1,11 +1,12 @@
-﻿<div class="cell-event @(Event.DateAndTime < DateTime.UtcNow ? "past-event" : "")" @onclick="() => Modal = true" @onclick:stopPropagation="true" draggable="true">
+﻿<div class="cell-event @(Event.DateAndTime < DateTime.UtcNow ? "past-event" : "")" @onclick="() => Modal = true" 
+    @onclick:stopPropagation="true">
     @(Event.IsAllDay ? ("|"+ " " + Event.Name) : (Event.DateAndTime.ToString("H:mm") + " " + Event.Name))
 </div>
 <div @onclick:stopPropagation="true">
     <Modal Open="Modal" Size="ModalSize.Medium">
         <ModalTitle><div class="modal-title__text">Изменить событие</div></ModalTitle>
         <ModalBody>
-            <EventDetails Event="Event" OnValidSubmit="OnUpdateEvent" Modal="() => Modal = false" ChooseMonth="ChooseMonth"/>
+            <EventDetails Event="Event" OnValidSubmit="OnUpdateEvent" Modal="() => Modal = false"/>
         </ModalBody>
         <ModalFooter>
             <Button Variant="Outline" OnClick="() => Modal = false">Отменить</Button>
@@ -19,7 +20,6 @@
     [Parameter] public Event Event { get; set; }
     [Parameter] public EventCallback<Event> OnUpdateEvent { get; set; }
     [Parameter] public EventCallback<int> OnDeleteEvent { get; set; }
-    [Parameter] public EventCallback ChooseMonth { get; set; }
 
     private bool Modal { get; set; } = false;
 
@@ -27,6 +27,5 @@
     {
         OnDeleteEvent.InvokeAsync(Event.Id);
         Modal = false;
-        ChooseMonth.InvokeAsync();
     }
 }

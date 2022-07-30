@@ -27,3 +27,11 @@ D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\obj\Debug\net6.0\Calendar_WorkT
 D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\obj\Debug\net6.0\ref\Calendar_WorkTest.dll
 D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\bin\Debug\net6.0\Blazority.dll
 D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\obj\Debug\net6.0\Calendar_WorkTest.csproj.CopyComplete
+D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\bin\Debug\net6.0\Plk.Blazor.DragDrop.dll
+D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
+D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\bin\Debug\net6.0\Microsoft.AspNetCore.Components.dll
+D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\bin\Debug\net6.0\Microsoft.AspNetCore.Components.Forms.dll
+D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\bin\Debug\net6.0\Microsoft.AspNetCore.Components.Web.dll
+D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\bin\Debug\net6.0\Microsoft.AspNetCore.Metadata.dll
+D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\bin\Debug\net6.0\Microsoft.JSInterop.dll
+D:\NikitaJob\Calendar_WorkTest\Calendar_WorkTest\bin\Debug\net6.0\System.IO.Pipelines.dll
